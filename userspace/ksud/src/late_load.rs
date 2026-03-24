@@ -120,10 +120,17 @@ pub fn run() -> Result<()> {
     // 14. Restart Manager so it gets a fresh ksu fd from the newly loaded kernel module
     info!("Restarting KernelSU Manager...");
     let pkg = "me.weishu.kernelsu";
-    let _ = Command::new("am").args(["force-stop", pkg]).status();
-    let _ = Command::new("am")
+    let output = Command::new("am").args(["force-stop", pkg]).output()?;
+    info!("am force-stop status: {}", output.status);
+    info!("stdout: {}", String::from_utf8_lossy(&output.stdout));
+    info!("stderr: {}", String::from_utf8_lossy(&output.stderr));
+    let output = Command::new("am")
         .args(["start", "-n", &format!("{pkg}/.ui.MainActivity")])
-        .status();
+        .output()?;
+    info!("am start status: {}", output.status);
+    info!("stdout: {}", String::from_utf8_lossy(&output.stdout));
+    info!("stderr: {}", String::from_utf8_lossy(&output.stderr));
+    info!("late_load done!");
 
     Ok(())
 }
