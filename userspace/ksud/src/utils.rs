@@ -257,6 +257,7 @@ pub fn daemonize<F: FnOnce() -> Result<()>>(configure: F) -> Result<()> {
     }
 
     setpgid(None, None)?;
+    switch_cgroups();
     configure()?;
     {
         let null_fd = open("/dev/null", OFlags::RDWR, Mode::empty())?;
