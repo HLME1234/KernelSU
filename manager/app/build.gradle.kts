@@ -33,8 +33,11 @@ val baseCFlags = listOf(
 val baseCppFlags = baseCFlags + "-fno-rtti"
 
 android {
-    namespace = "com.moyun365.android.gkmathtong"
+    namespace = "me.weishu.kernelsu"
     val isPrBuild = project.findProperty("IS_PR_BUILD")?.toString()?.toBoolean() ?: false
+    defaultConfig {
+        applicationId = "com.moyun365.android.gkmathtong"
+    }
 
     buildTypes {
         debug {
